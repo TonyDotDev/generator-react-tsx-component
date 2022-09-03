@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "test:watch": "mocha -w"
+    "test:watch": "mocha -w",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -37,9 +39,16 @@
     "app"
   ],
   "devDependencies": {
+    "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "path": "^0.12.7",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^6.3.0"
+    "yeoman-test": "^6.3.0",
+    "husky": "^8.0.0"
+  },
+  "lint-staged": {
+    "*.(js|ts|tsx|css)": [
+      "npm run test"
+    ]
   }
 }
