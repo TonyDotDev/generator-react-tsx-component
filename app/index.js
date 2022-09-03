@@ -7,59 +7,56 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
     this.log("Initializing...");
-  }
-  async prompting() {
-    this.answers = await this.prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "Enter a name for the new component (i.e.: NavigationMenu): ",
-      },
-      {
-        type: "confirm",
-        name: "hasTest",
-        message: "Would you like to create a test file with this component? ",
-      },
-    ]);
+
+    this.argument("name", {
+      type: String,
+      required: true,
+      description:
+        "The name of the component. This will also be the name of the directory containing the component.",
+    });
+
+    this.option("test", {
+      type: Boolean,
+      default: false,
+      description:
+        "Adds a __tests__ directory in the component folder with some boilerplate for @testing-library/react.",
+    });
+
+    this.name = this.options.name;
+    this.test = this.options.test;
   }
 
   writing() {
     // Create component directory
-    this.destinationRoot(this.answers.name);
+    this.destinationRoot(this.name);
 
     // Write css file
-    this.fs.copyTpl(
-      this.templatePath("component.css"),
-      this.destinationPath(this.answers.name + ".css")
-    );
+    this.fs.copyTpl(this.templatePath("component.css"), this.destinationPath(this.name + ".css"));
 
     // Write component file
-    this.fs.copyTpl(
-      this.templatePath("component.tsx"),
-      this.destinationPath(this.answers.name + ".tsx"),
-      {
-        name: this.answers.name,
-      }
-    );
+    this.fs.copyTpl(this.templatePath("component.tsx"), this.destinationPath(this.name + ".tsx"), {
+      name: this.name,
+    });
 
-    if (this.answers.hasTest) {
+    // If test flag, write test files
+    if (this.test) {
       this.fs.copyTpl(
         this.templatePath("component.test.tsx"),
-        this.destinationPath("__tests__/", this.answers.name + ".test.tsx"),
+        this.destinationPath("__tests__/", this.name + ".test.tsx"),
         {
-          name: this.answers.name,
+          name: this.name,
         }
       );
     }
 
     // Write component export file
     this.fs.copyTpl(this.templatePath("index.ts"), this.destinationPath("index.ts"), {
-      name: this.answers.name,
+      name: this.name,
     });
   }
 
   end() {
-    const outputMsg = `\n\nYour React TSX component ${this.answers.name} has been created.`;
+    const outputMsg = `\n\nYour React TSX component ${this.name} has been created.`;
     this.log(yosay(outputMsg));
   }
 };
