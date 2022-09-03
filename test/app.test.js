@@ -91,4 +91,28 @@ describe("generator:app", () => {
       });
     });
   });
+
+  describe("Name argument with path and test flag", () => {
+    const PATH = "custom/path";
+
+    before((done) => {
+      helpers
+        .run(path.join(__dirname, "../app"))
+        .withArguments([NAME])
+        .withOptions({ path: PATH, test: true })
+        .on("end", done);
+    });
+
+    describe("[component] directory files", () => {
+      it("are created in the specified directory path", () => {
+        const files = [
+          `${PATH}/${NAME}/index.ts`,
+          `${PATH}/${NAME}/${NAME}.tsx`,
+          `${PATH}/${NAME}/${NAME}.css`,
+          `${PATH}/${NAME}/__tests__/${NAME}.test.tsx`,
+        ];
+        assert.file(files);
+      });
+    });
+  });
 });

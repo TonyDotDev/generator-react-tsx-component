@@ -22,13 +22,24 @@ module.exports = class extends Generator {
         "Adds a __tests__ directory in the component folder with some boilerplate for @testing-library/react.",
     });
 
+    this.option("path", {
+      type: String,
+      default: "",
+      description: "Path where the component directory will be created",
+    });
+
     this.name = this.options.name;
     this.test = this.options.test;
+
+    this.generateDestination = function () {
+      if (this.options.path === "") return this.options.name;
+      return this.options.path + "/" + this.options.name;
+    };
   }
 
   writing() {
     // Create component directory
-    this.destinationRoot(this.name);
+    this.destinationRoot(this.generateDestination());
 
     // Write css file
     this.fs.copyTpl(this.templatePath("component.css"), this.destinationPath(this.name + ".css"));
