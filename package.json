@@ -6,8 +6,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha -w",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
