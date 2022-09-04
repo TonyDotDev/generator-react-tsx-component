@@ -4,6 +4,8 @@ const path = require("path");
 
 describe("generator:app", () => {
   const NAME = "TsxComponent";
+  const CLASS_NAME = "tsx-component";
+
   describe("Name argument with no flags", () => {
     before((done) => {
       helpers.run(path.join(__dirname, "../app")).withArguments([NAME]).on("end", done);
@@ -29,8 +31,9 @@ describe("generator:app", () => {
         assert.file([filePath]);
       });
 
-      it("is has no content", () => {
-        assert.fileContent(filePath, "");
+      it("is has css class generated from component name", () => {
+        const fileStrings = [`.${CLASS_NAME} {\n`, `}`];
+        assert.equalsFileContent(filePath, fileStrings.join(""));
       });
     });
 
@@ -46,7 +49,7 @@ describe("generator:app", () => {
           `import React from 'react';\n\n`,
           `import './${NAME}.css';\n\n`,
           `export function ${NAME}(): React.ReactElement {\n`,
-          `  return <div>${NAME}</div>;\n`,
+          `  return <div className='${CLASS_NAME}'>${NAME}</div>;\n`,
           `}`,
         ];
 

@@ -29,8 +29,7 @@
   },
   "homepage": "https://github.com/NeverEnder4/generator-tsx-component#readme",
   "dependencies": {
-    "decamelize": "^6.0.0",
-    "uppercamelcase": "^3.0.0",
+    "xcase": "^2.0.1",
     "yeoman-generator": "^5.7.0",
     "yosay": "^2.0.2"
   },
@@ -38,12 +37,12 @@
     "app"
   ],
   "devDependencies": {
+    "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "path": "^0.12.7",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^6.3.0",
-    "husky": "^8.0.0"
+    "yeoman-test": "^6.3.0"
   },
   "lint-staged": {
     "*.+(js|ts|tsx|css)": [
