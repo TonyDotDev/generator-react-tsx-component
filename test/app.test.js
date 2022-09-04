@@ -5,10 +5,11 @@ const path = require("path");
 describe("generator:app", () => {
   const NAME = "TsxComponent";
   const CLASS_NAME = "tsx-component";
+  const APP_PATH = "../generators/app";
 
   describe("Name argument with no flags", () => {
     before((done) => {
-      helpers.run(path.join(__dirname, "../app")).withArguments([NAME]).on("end", done);
+      helpers.run(path.join(__dirname, APP_PATH)).withArguments([NAME]).on("end", done);
     });
 
     describe("[component]/index.ts", () => {
@@ -68,7 +69,7 @@ describe("generator:app", () => {
   describe("Name argument with test flag", () => {
     before((done) => {
       helpers
-        .run(path.join(__dirname, "../app"))
+        .run(path.join(__dirname, APP_PATH))
         .withArguments([NAME])
         .withOptions({ test: true })
         .on("end", done);
@@ -100,7 +101,7 @@ describe("generator:app", () => {
 
     before((done) => {
       helpers
-        .run(path.join(__dirname, "../app"))
+        .run(path.join(__dirname, APP_PATH))
         .withArguments([NAME])
         .withOptions({ path: PATH, test: true })
         .on("end", done);

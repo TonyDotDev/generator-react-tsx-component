@@ -7,7 +7,7 @@ const { depascalize } = require("xcase");
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    this.log("Initializing...");
+    this.log("Creating component...");
 
     this.argument("name", {
       type: String,

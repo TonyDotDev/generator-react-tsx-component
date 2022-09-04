@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/NeverEnder4/generator-tsx-component#readme",
   "dependencies": {
+    "mkdirp": "^1.0.4",
     "xcase": "^2.0.1",
     "yeoman-generator": "^5.7.0",
     "yosay": "^2.0.2"
