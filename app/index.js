@@ -2,6 +2,7 @@
 
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
+const { depascalize } = require("xcase");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -28,13 +29,19 @@ module.exports = class extends Generator {
       description: "Path where the component directory will be created",
     });
 
-    this.name = this.options.name;
-    this.test = this.options.test;
+    this.getCssClassName = function (name) {
+      return decamelize(name, { separator: "-" });
+    };
 
     this.generateDestination = function () {
-      if (this.options.path === "") return this.options.name;
-      return this.options.path + "/" + this.options.name;
+      const { path, name } = this.options;
+      if (path === "") return name;
+      return path + "/" + name;
     };
+
+    this.name = this.options.name;
+    this.test = this.options.test;
+    this.className = depascalize(this.options.name, "-");
   }
 
   writing() {
@@ -42,11 +49,14 @@ module.exports = class extends Generator {
     this.destinationRoot(this.generateDestination());
 
     // Write css file
-    this.fs.copyTpl(this.templatePath("component.css"), this.destinationPath(this.name + ".css"));
+    this.fs.copyTpl(this.templatePath("component.css"), this.destinationPath(this.name + ".css"), {
+      className: this.className,
+    });
 
     // Write component file
     this.fs.copyTpl(this.templatePath("component.tsx"), this.destinationPath(this.name + ".tsx"), {
       name: this.name,
+      className: this.className,
     });
 
     // If test flag, write test files
