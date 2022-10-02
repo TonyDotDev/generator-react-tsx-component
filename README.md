@@ -1,5 +1,5 @@
 # generator-react-tsx-component
-Yeoman generator for React TSX components
+Yeoman generator for React TSX components. The [bulletproof react repo](https://github.com/alan2207/bulletproof-react/blob/master/README.md) was an inspiration for this generator. It speeds up the process of adding new component and feature folders when using a feature based project structure.
 
 ## Table Of Contents
 
